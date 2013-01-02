@@ -1,1 +1,0 @@
-cmd_net/bluetooth/hidp/hidp.o := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o net/bluetooth/hidp/hidp.o net/bluetooth/hidp/core.o net/bluetooth/hidp/sock.o 

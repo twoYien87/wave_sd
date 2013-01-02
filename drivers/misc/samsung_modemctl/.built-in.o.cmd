@@ -1,1 +1,0 @@
-cmd_drivers/misc/samsung_modemctl/built-in.o :=  /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/misc/samsung_modemctl/built-in.o drivers/misc/samsung_modemctl/wave/built-in.o 

@@ -1,1 +1,0 @@
-cmd_drivers/cpufreq/cpufreq_lagfree.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o drivers/cpufreq/cpufreq_lagfree.ko drivers/cpufreq/cpufreq_lagfree.o drivers/cpufreq/cpufreq_lagfree.mod.o

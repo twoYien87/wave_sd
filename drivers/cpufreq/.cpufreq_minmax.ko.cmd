@@ -1,1 +1,0 @@
-cmd_drivers/cpufreq/cpufreq_minmax.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o drivers/cpufreq/cpufreq_minmax.ko drivers/cpufreq/cpufreq_minmax.o drivers/cpufreq/cpufreq_minmax.mod.o

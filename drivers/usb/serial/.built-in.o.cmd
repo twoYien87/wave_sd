@@ -1,1 +1,0 @@
-cmd_drivers/usb/serial/built-in.o :=  /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/usb/serial/built-in.o drivers/usb/serial/usbserial.o drivers/usb/serial/ftdi_sio.o 

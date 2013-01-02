@@ -1,1 +1,0 @@
-cmd_fs/cifs/cifs.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o fs/cifs/cifs.ko fs/cifs/cifs.o fs/cifs/cifs.mod.o

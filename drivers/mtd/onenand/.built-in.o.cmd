@@ -1,1 +1,0 @@
-cmd_drivers/mtd/onenand/built-in.o :=  /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/mtd/onenand/built-in.o drivers/mtd/onenand/onenand.o drivers/mtd/onenand/samsung.o 
