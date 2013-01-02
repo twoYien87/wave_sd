@@ -1,0 +1,1 @@
+cmd_drivers/usb/serial/usbserial.o := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/usb/serial/usbserial.o drivers/usb/serial/usb-serial.o drivers/usb/serial/generic.o drivers/usb/serial/bus.o drivers/usb/serial/console.o 

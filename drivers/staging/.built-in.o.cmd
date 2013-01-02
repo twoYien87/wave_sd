@@ -1,0 +1,1 @@
+cmd_drivers/staging/built-in.o :=  /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/staging/built-in.o drivers/staging/staging.o drivers/staging/tty/built-in.o drivers/staging/generic_serial/built-in.o drivers/staging/android/built-in.o drivers/staging/zram/built-in.o drivers/staging/zcache/built-in.o 

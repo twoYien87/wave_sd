@@ -1,0 +1,1 @@
+cmd_crypto/ansi_cprng.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o crypto/ansi_cprng.ko crypto/ansi_cprng.o crypto/ansi_cprng.mod.o

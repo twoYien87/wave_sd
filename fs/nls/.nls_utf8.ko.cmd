@@ -1,0 +1,1 @@
+cmd_fs/nls/nls_utf8.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o fs/nls/nls_utf8.ko fs/nls/nls_utf8.o fs/nls/nls_utf8.mod.o

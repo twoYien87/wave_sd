@@ -1,0 +1,1 @@
+cmd_drivers/media/video/gspca/gspca_main.ko := /home/demo/Public/samsung-kernel-aries/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/samsung-kernel-aries/scripts/module-common.lds   -o drivers/media/video/gspca/gspca_main.ko drivers/media/video/gspca/gspca_main.o drivers/media/video/gspca/gspca_main.mod.o
