@@ -93,7 +93,7 @@ $BB chmod 771 /data
 $BB chmod 771 /cache
 fi
 
-$BB echo 90000000 > /sys/block/zram0/disksize
+$BB echo 200000000 > /sys/block/zram0/disksize
 $BB mkswap /dev/block/zram0
 $BB swapon /dev/block/zram0
 
@@ -121,7 +121,7 @@ if $BB grep -q bootmode=2 /proc/cmdline || $BB grep -q bootmode=9 /proc/cmdline 
 fi
 $BB cp files/modules/*.so /system/lib/
 # remove cam apk for 302mo no needed if u use 290 or 280 uncheck it
-$BB rm /system/app/Gallery2.apk
+# $BB rm /system/app/Gallery2.apk
 $BB umount /sys
 $BB umount /proc
 $BB rm -rf /files

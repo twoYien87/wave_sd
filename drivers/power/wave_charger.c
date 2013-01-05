@@ -14,7 +14,6 @@
  * published by the Free Software Foundation.
  *
  */
-#define DEBUG
 
 #include <asm/mach-types.h>
 #include <linux/delay.h>

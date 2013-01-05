@@ -4674,7 +4674,6 @@ static struct platform_device *wave_devices[] __initdata = {
 #ifdef CONFIG_FIQ_DEBUGGER
 	&s5pv210_device_fiqdbg_uart2,
 #endif
-	&s5p_device_onenand,
 #ifdef CONFIG_RTC_DRV_S3C
 	&s5p_device_rtc,
 #endif
@@ -4854,9 +4853,6 @@ static void __init wave_map_io(void)
 	check_bigmem();
 	s5p_reserve_bootmem(wave_media_devs,
 		ARRAY_SIZE(wave_media_devs), S5P_RANGE_MFC);
-#ifdef CONFIG_MTD_ONENAND
-	s5p_device_onenand.name = "s5pc110-onenand";
-#endif
 }
 
 unsigned int pm_debug_scratchpad;
@@ -5059,13 +5055,6 @@ static struct samsung_keypad_platdata wave_keypad_data __initdata = {
 	.wakeup		= 1,
 
 };
-
-static void __init onenand_init(void)
-{
-	struct clk *clk = clk_get(NULL, "onenand");
-	BUG_ON(!clk);
-	clk_enable(clk);
-}
 
 static void __init wave_machine_init(void)
 {

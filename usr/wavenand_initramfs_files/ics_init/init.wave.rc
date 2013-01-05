@@ -12,6 +12,10 @@ on init
      # FIXME: Remove emmc?
     mkdir /datadata 0771 system system
 
+    write /sys/devices/virtual/bdi/179:1/read_ahead_kb 64
+
+    # Disable address randomization
+    write /proc/sys/kernel/randomize_va_space 0
     # We will create our own ril-daemon service in class 'core' because the
     # rild doesn't like being killed. (During device encryption.)
     stop ril-daemon

@@ -73,7 +73,7 @@ config S5PV210_POWER_DOMAIN
 config S5PV210_CORESIGHT
 	bool "Coresight"
 	select OC_ETM
-	default y
+	default n
 	help
 	  Support embedded trace cell
 
@@ -236,7 +236,6 @@ config MACH_WAVE
 	select S3C_DEV_WDT
 	select S3C_DEV_I2C1
 	select S3C_DEV_I2C2
-	select S5P_DEV_ONENAND
 	select HAVE_PWM
 	select SAMSUNG_DEV_PWM
 	select SAMSUNG_DEV_KEYPAD
@@ -257,7 +256,6 @@ config MACH_ARIES
 	select S3C_DEV_WDT
 	select S3C_DEV_I2C1
 	select S3C_DEV_I2C2
-	select S5P_DEV_ONENAND
 	select HAVE_PWM
 	select SAMSUNG_DEV_PWM
 	select S3C_DEV_HSMMC
@@ -377,7 +375,7 @@ config DVFS_LIMIT
 
 config S5PV210_XL
 bool "Enable XL_MEM (more free RAM)"
-default y
+default n
 help
     Aggressively restrict the memory set aside on
     boot for FIMC, MFC and JPEG.
@@ -414,3 +412,4 @@ config WIFI_CONTROL_FUNC
        help
          Enables Power/Reset/Carddetect function abstraction
 endif
+

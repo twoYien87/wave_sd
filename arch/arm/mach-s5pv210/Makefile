@@ -18,7 +18,7 @@ obj-$(CONFIG_S5PV210_PM)	+= pm.o sleep.o
 obj-$(CONFIG_CPU_FREQ)		+= cpufreq.o
 
 obj-$(CONFIG_S5PV210_POWER_DOMAIN)	+= power-domain.o
-obj-$(CONFIG_S5PV210_CORESIGHT) += coresight.o
+
 
 # machine support
 
@@ -58,7 +58,6 @@ obj-$(CONFIG_MACH_WAVE)	+= dev-wave-phone.o
 # device support
 
 obj-y				+= dev-audio.o
-obj-y				+= dev-fiqdbg.o
 obj-$(CONFIG_S3C64XX_DEV_SPI)	+= dev-spi.o
 
 
