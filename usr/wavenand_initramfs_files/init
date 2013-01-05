@@ -41,6 +41,22 @@ $BB mount -t sysfs sysfs /sys
 
 $BB mv /files/charger /
 $BB mv /files/init /
+if $BB grep -q 1 /sys/devices/platform/i2c-gpio.6/i2c-6/6-0066/max8998-charger/power_supply/usb/online ; then
+    $BB mv /ics_init/* /
+    $BB mv /lpm.rc /init.rc
+    $BB rm /init.aries.rc
+    $BB umount /sys
+    $BB umount /proc
+    $BB rm -rf /files
+    $BB rm -rf /ics_init
+    $BB rm -rf /ics_rec_init
+    $BB date >>boot.txt
+    $BB rm -fr /dev/*
+# finally remove busybox
+$BB rm /busybox
+export PATH="${_PATH}"
+exec /init
+fi
 
 $BB cat /proc/mounts  > /etc/mtab
 if ! $BB fdisk -l /dev/block/mmcblk0 | $BB grep "/dev/block/mmcblk0p4"
@@ -122,12 +138,7 @@ fi
 $BB cp files/modules/*.so /system/lib/
 # remove cam apk for 302mo no needed if u use 290 or 280 uncheck it
 # $BB rm /system/app/Gallery2.apk
-if $BB grep -q 1 /sys/class/power_supply/battery/charging_mode_booting ; then
-    # low power mode
-    $BB echo "found charging_mode command"
-    $BB cp /lpm.rc /init.rc
-    $BB rm /init.aries.rc
-fi
+
 $BB umount /sys
 $BB umount /proc
 $BB rm -rf /files
