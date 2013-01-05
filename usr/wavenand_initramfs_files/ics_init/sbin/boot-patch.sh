@@ -5,7 +5,9 @@
 # set busybox location
 BB="/system/xbin/busybox"
 
-
+# set fsync
+	echo 0 > /data/local/devil/fsync
+	echo 0 > /sys/devices/virtual/misc/fsynccontrol/fsync_enabled
 # partitions
 
 if $BB [ ! -d /data/local/devil ]; then 

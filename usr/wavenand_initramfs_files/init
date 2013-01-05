@@ -83,11 +83,11 @@ $BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc /dev/block/mmc
 $BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p4 /data
 $BB reboot
 else
-/ics_rec_init/sbin/fsck.ext4 -y /dev/block/mmcblk0p2
-/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
-$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p2 /cache
-$BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc /dev/block/mmcblk0p3 /system
-$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p4 /data
+#/ics_rec_init/sbin/fsck.ext4 -y /dev/block/mmcblk0p2
+#/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
+$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p2 /cache
+$BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p3 /system
+$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p4 /data
 $BB chmod 771 /system
 $BB chmod 771 /data
 $BB chmod 771 /cache
@@ -122,6 +122,12 @@ fi
 $BB cp files/modules/*.so /system/lib/
 # remove cam apk for 302mo no needed if u use 290 or 280 uncheck it
 # $BB rm /system/app/Gallery2.apk
+if $BB grep -q 1 /sys/class/power_supply/battery/charging_mode_booting ; then
+    # low power mode
+    $BB echo "found charging_mode command"
+    $BB cp /lpm.rc /init.rc
+    $BB rm /init.aries.rc
+fi
 $BB umount /sys
 $BB umount /proc
 $BB rm -rf /files
