@@ -59,27 +59,8 @@ exec /init
 fi
 
 $BB cat /proc/mounts  > /etc/mtab
-timer=0
-while ! busybox test -d /sys/devices/platform/s3c-sdhci.2/mmc_host/mmc2/mmc2:0002 | busybox test -d /sys/devices/platform/s3c-sdhci.2/mmc_host/mmc2/mmc2:aaaa  ; do
-	echo "Waiting for internal mmc..."
-	if busybox [ "$timer" -eq 4 ] ; then
-		timer=5
-	elif busybox [ "$timer" -eq 3 ] ; then
-		timer=4 
-	elif busybox [ "$timer" -eq 2 ] ; then
-		timer=3
-	elif busybox [ "$timer" -eq 1 ] ; then
-		timer=2
-	elif busybox [ "$timer" -eq 0 ] ; then
-		timer=1
-	fi
-	echo "timer: $timer"
-	if busybox [ "$timer" -le 5 ] ; then
-		busybox sleep 1
-	else
-		break
-	fi
-done
+$BB sleep 1
+
 
 #/ics_rec_init/sbin/fsck.ext4 -y /dev/block/mmcblk0p2
 #/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
