@@ -2,7 +2,17 @@
 umount /data
 umount /cache
 umount /system
-if ! disk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p4"
+if fdisk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p5"
+
+then
+
+fdisk /dev/block/mmcblk0 << EOF > /dev/null 2>&1
+d
+5
+w
+EOF
+fi
+if fdisk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p4"
 
 then
 
@@ -12,7 +22,7 @@ d
 w
 EOF
 fi
-if ! disk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p3"
+if fdisk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p3"
 
 then
 
@@ -22,7 +32,7 @@ d
 w
 EOF
 fi
-if ! disk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p2"
+if fdisk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p2"
 
 then
 
@@ -32,7 +42,7 @@ d
 w
 EOF
 fi
-if ! disk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p1"
+if fdisk -l /dev/block/mmcblk0 | grep "/dev/block/mmcblk0p1"
 
 then
 
@@ -382,6 +392,41 @@ PartitionSdCard() {
 		echo "done"
 	fi
 	echo
+fdisk /dev/block/mmcblk0 << EOF > /dev/null 2>&1
+d
+2
+n
+p
+2
+
++200M
+n
+p
+3
+
++390M
+n
+p
+
+
+w
+EOF
+fsck.ext4 -fy /dev/block/mmcblk0p2
+fsck.ext4 -fy /dev/block/mmcblk0p3
+fsck.ext4 -fy /dev/block/mmcblk0p4
+mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p2
+tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
+mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p3
+tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p3
+mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p4
+tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p4
+fsck.ext4 -Dfy /dev/block/mmcblk0p2
+fsck.ext4 -Dfy /dev/block/mmcblk0p3
+fsck.ext4 -Dfy /dev/block/mmcblk0p4
+mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p2 /cache
+mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc /dev/block/mmcblk0p3 /system
+mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p4 /data
+
 	
 }
 
@@ -698,6 +743,4 @@ UpgradeExt "$EXTFS"
 
 # say goodbye and show print output
 ShowCardInfo
-mount -t ext4 /dev/block/mmcblk0p4 /data
-mount -t ext4 /dev/block/mmcblk0p2 /cache
-mount -t ext4 /dev/block/mmcblk0p3 /system
+

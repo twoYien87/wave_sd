@@ -59,28 +59,46 @@ exec /init
 fi
 
 $BB cat /proc/mounts  > /etc/mtab
-timer=0
-while ! busybox test -d /sys/devices/platform/s3c-sdhci.2/mmc_host/mmc2/mmc2:0002 | busybox test -d /sys/devices/platform/s3c-sdhci.2/mmc_host/mmc2/mmc2:aaaa  ; do
-	echo "Waiting for internal mmc..."
-	if busybox [ "$timer" -eq 4 ] ; then
-		timer=5
-	elif busybox [ "$timer" -eq 3 ] ; then
-		timer=4 
-	elif busybox [ "$timer" -eq 2 ] ; then
-		timer=3
-	elif busybox [ "$timer" -eq 1 ] ; then
-		timer=2
-	elif busybox [ "$timer" -eq 0 ] ; then
-		timer=1
-	fi
-	echo "timer: $timer"
-	if busybox [ "$timer" -le 5 ] ; then
-		busybox sleep 1
-	else
-		break
-	fi
-done
+if ! $BB fdisk -l /dev/block/mmcblk0 | $BB grep "/dev/block/mmcblk0p4"
 
+then
+
+$BB fdisk /dev/block/mmcblk0 << EOF > /dev/null 2>&1
+d
+2
+n
+p
+2
+
++200M
+n
+p
+3
+
++390M
+n
+p
+
+
+w
+EOF
+/ics_rec_init/sbin/fsck.ext4 -fy /dev/block/mmcblk0p2
+/ics_rec_init/sbin/fsck.ext4 -fy /dev/block/mmcblk0p3
+/ics_rec_init/sbin/fsck.ext4 -fy /dev/block/mmcblk0p4
+/ics_rec_init/sbin/mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p2
+/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
+/ics_rec_init/sbin/mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p3
+/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p3
+/ics_rec_init/sbin/mkfs.ext4 -O ^ext_attr,^has_journal,^huge_file -b 4096 /dev/block/mmcblk0p4
+/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p4
+/ics_rec_init/sbin/fsck.ext4 -Dfy /dev/block/mmcblk0p2
+/ics_rec_init/sbin/fsck.ext4 -Dfy /dev/block/mmcblk0p3
+/ics_rec_init/sbin/fsck.ext4 -Dfy /dev/block/mmcblk0p4
+$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p2 /cache
+$BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc /dev/block/mmcblk0p3 /system
+$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc /dev/block/mmcblk0p4 /data
+$BB reboot
+else
 #/ics_rec_init/sbin/fsck.ext4 -y /dev/block/mmcblk0p2
 #/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
 $BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p2 /cache
@@ -89,8 +107,9 @@ $BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,d
 $BB chmod 771 /system
 $BB chmod 771 /data
 $BB chmod 771 /cache
+fi
 
-$BB echo 90000000 > /sys/block/zram0/disksize
+$BB echo 200000000 > /sys/block/zram0/disksize
 $BB mkswap /dev/block/zram0
 $BB swapon /dev/block/zram0
 

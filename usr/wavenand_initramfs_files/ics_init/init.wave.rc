@@ -11,8 +11,33 @@ on init
     symlink /storage/sdcard0 /mnt/sdcard
      # FIXME: Remove emmc?
     mkdir /datadata 0771 system system
-
-    write /sys/devices/virtual/bdi/179:1/read_ahead_kb 64
+    write /sys/devices/virtual/bdi/179:0/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:0/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:1/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:2/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:3/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:4/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:5/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:6/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:7/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:8/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:9/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:10/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:11/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:12/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:13/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:14/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/1:15/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:0/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:1/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:2/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:3/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:4/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:5/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:6/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/7:7/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/default/read_ahead_kb 0
+    write /sys/devices/virtual/bdi/253:0/read_ahead_kb 0
 
     # Disable address randomization
     write /proc/sys/kernel/randomize_va_space 0

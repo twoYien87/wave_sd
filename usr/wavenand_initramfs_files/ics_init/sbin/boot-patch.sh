@@ -6,8 +6,8 @@
 BB="/system/xbin/busybox"
 
 # set fsync
-	echo 0 > /data/local/devil/fsync
-	echo 0 > /sys/devices/virtual/misc/fsynccontrol/fsync_enabled
+	$BB echo 0 > /data/local/devil/fsync
+	$BB echo 0 > /sys/devices/virtual/misc/fsynccontrol/fsync_enabled
 # partitions
 
 if $BB [ ! -d /data/local/devil ]; then 
@@ -18,4 +18,6 @@ fi
 
 
 
-$BB echo 200 > /proc/sys/vm/swappiness
+$BB echo 1 > /proc/sys/vm/swappiness
+$BB echo 0 > /sys/devices/virtual/bdi/254:0/read_ahead_kb 256
+$BB echo 0 > /sys/devices/virtual/bdi/254:1/read_ahead_kb 256
