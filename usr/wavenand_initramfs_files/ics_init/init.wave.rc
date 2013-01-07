@@ -65,11 +65,11 @@ on boot
 on fs
    
 # permissions for bluetooth.
-    chown bluetooth bluetooth /dev/s3c2410_serial0
+    chown bluetooth net_bt_stack /dev/s3c2410_serial0
     chmod 0600 /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
 
 # Permissions for System Server and daemons.
     chown system system /sys/class/backlight/s5p_bl/brightness
@@ -78,6 +78,8 @@ on fs
     chown radio radio /sys/class/sec/uart_switch/UART_SEL/value
     chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
 
+# load wifi module
+    insmod /system/lib/modules/bcmdhd.ko
 
 on post-fs
     chown system system /datadata
@@ -85,14 +87,6 @@ on post-fs
 
     #symlinks for samsung RIL
 
-    chown radio radio /mnt/bada_user/modem/*
-    chmod 0666 /mnt/bada_user/modem/*
-    chown radio radio /mnt/bada_user/modem/nvm/*
-    chmod 0666 /mnt/bada_user/modem/nvm/*
-    chown radio radio /mnt/bada_user/modem/nvm/num/*
-    chmod 0666 /mnt/bada_user/modem/nvm/num/*
-    chown radio radio /mnt/bada_user/modem/NV/*
-    chmod 0666 /mnt/bada_user/modem/NV/*
 # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -142,15 +136,6 @@ service pvrsrvinit /system/vendor/bin/pvrsrvinit
     group root
     oneshot
 
-# FIXME
-# service p2p_supplicant /system/bin/wpa_supplicant \
-#   -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
-#   -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
-#   #   we will start as root and wpa_supplicant will switch to user wifi
-#   #   after setting up the capabilities required for WEXT
-#   #   user wifi
-#   #   group wifi inet keystore
-
 service wpa_supplicant /system/bin/wpa_supplicant \
 	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin
 	#   we will start as root and wpa_supplicant will switch to user wifi
@@ -162,7 +147,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
 	disabled
 	oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
     class main
     disabled
     oneshot
@@ -187,14 +172,8 @@ service bdaddr /system/bin/bdaddr_read
     disabled
     oneshot
 
-
-service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm \
-    --baudrate 3000000 --patchram /vendor/firmware/bcm4329.hcd /dev/s3c2410_serial0
-    class main
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-    oneshot
+on property:init.svc.bootanim=running
+    start bdaddr
 
 # bugreport is triggered by holding down volume down, volume up and power
 #service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport

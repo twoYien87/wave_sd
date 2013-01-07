@@ -57,39 +57,20 @@ $BB rm /busybox
 export PATH="${_PATH}"
 exec /init
 fi
-
 $BB cat /proc/mounts  > /etc/mtab
 $BB sleep 1
-
-
-#/ics_rec_init/sbin/fsck.ext4 -y /dev/block/mmcblk0p2
-#/ics_rec_init/sbin/tune2fs.ext4 -o journal_data_writeback /dev/block/mmcblk0p2
+$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p4 /data
 $BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p2 /cache
 $BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p3 /system
-$BB mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=0,noauto_da_alloc,data=writeback /dev/block/mmcblk0p4 /data
 $BB chmod 771 /system
 $BB chmod 771 /data
 $BB chmod 771 /cache
-
 $BB echo 90000000 > /sys/block/zram0/disksize
 $BB mkswap /dev/block/zram0
 $BB swapon /dev/block/zram0
-
-
 $BB mkdir -p /data/local/devil
-KV=`$BB uname -r`
-$BB echo "version: $KV"
-
-CUR=`$BB cat /proc/version`
-if $BB [ -e /system/last_version ]; then
-SAV=`$BB cat /system/last_version`
-else
-SAV=unknown
-fi
 $BB echo "command line:"
 $BB cat /proc/cmdline
-
-$BB echo "starting bootmode detection..."
 if $BB grep -q bootmode=2 /proc/cmdline || $BB grep -q bootmode=9 /proc/cmdline ; then
     $BB rm -rf /etc
     $BB mv /ics_rec_init/* /
@@ -97,10 +78,7 @@ if $BB grep -q bootmode=2 /proc/cmdline || $BB grep -q bootmode=9 /proc/cmdline 
     $BB rm -rf /etc
     $BB mv /ics_init/* /
 fi
-$BB cp files/modules/*.so /system/lib/
-# remove cam apk for 302mo no needed if u use 290 or 280 uncheck it
-# $BB rm /system/app/Gallery2.apk
-
+#$BB cp /files/*.ko /system/lib/modules/
 $BB umount /sys
 $BB umount /proc
 $BB rm -rf /files
@@ -108,10 +86,6 @@ $BB rm -rf /ics_init
 $BB rm -rf /ics_rec_init
 $BB date >>boot.txt
 $BB rm -fr /dev/*
-
-
-# finally remove busybox
 $BB rm /busybox
-
 export PATH="${_PATH}"
 exec /init
