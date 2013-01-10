@@ -92,7 +92,7 @@ config VIDEO_MEDIA
 comment "Multimedia drivers"
 
 source "drivers/media/common/Kconfig"
-source "drivers/media/rc/Kconfig"
+
 
 #
 # Tuner drivers for DVB and V4L
@@ -108,10 +108,5 @@ source "drivers/media/video/Kconfig"
 
 source "drivers/media/radio/Kconfig"
 
-#
-# DVB adapters
-#
-
-source "drivers/media/dvb/Kconfig"
 
 endif # MEDIA_SUPPORT

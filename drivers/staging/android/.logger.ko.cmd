@@ -1,0 +1,1 @@
+cmd_drivers/staging/android/logger.ko := /home/demo/Vidéos/wave_sd/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/wave_sd/scripts/module-common.lds   -o drivers/staging/android/logger.ko drivers/staging/android/logger.o drivers/staging/android/logger.mod.o

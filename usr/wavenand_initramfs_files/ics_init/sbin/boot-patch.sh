@@ -18,6 +18,4 @@ fi
 
 
 
-$BB echo 1 > /proc/sys/vm/swappiness
-$BB echo 0 > /sys/devices/virtual/bdi/254:0/read_ahead_kb 256
-$BB echo 0 > /sys/devices/virtual/bdi/254:1/read_ahead_kb 256
+$BB echo 100 > /proc/sys/vm/swappiness

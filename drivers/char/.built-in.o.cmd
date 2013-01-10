@@ -1,0 +1,1 @@
+cmd_drivers/char/built-in.o :=  /home/demo/Vidéos/wave_sd/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/char/built-in.o drivers/char/mem.o drivers/char/random.o drivers/char/misc.o drivers/char/apm-emulation.o drivers/char/hw_random/built-in.o 

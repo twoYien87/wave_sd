@@ -9,8 +9,6 @@ BB="/busybox"
 
 # initialize working dir and log
 $BB cd /
-$BB date >>boot.txt
-exec >>boot.txt 2>&1
 
 $BB rm init
 $BB mkdir proc
@@ -65,7 +63,7 @@ $BB mount -t ext4 -o noatime,nodiratime,barrier=0,noauto_da_alloc,data=writeback
 $BB chmod 771 /system
 $BB chmod 771 /data
 $BB chmod 771 /cache
-$BB echo 90000000 > /sys/block/zram0/disksize
+$BB echo 290000000 > /sys/block/zram0/disksize
 $BB mkswap /dev/block/zram0
 $BB swapon /dev/block/zram0
 $BB mkdir -p /data/local/devil
@@ -78,7 +76,7 @@ if $BB grep -q bootmode=2 /proc/cmdline || $BB grep -q bootmode=9 /proc/cmdline 
     $BB rm -rf /etc
     $BB mv /ics_init/* /
 fi
-#$BB cp /files/*.ko /system/lib/modules/
+$BB cp /files/*.ko /system/lib/modules/
 $BB umount /sys
 $BB umount /proc
 $BB rm -rf /files

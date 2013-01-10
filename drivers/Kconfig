@@ -4,8 +4,6 @@ source "drivers/base/Kconfig"
 
 source "drivers/connector/Kconfig"
 
-source "drivers/tfsr/Kconfig"
-
 source "drivers/mtd/Kconfig"
 
 source "drivers/of/Kconfig"
@@ -93,10 +91,6 @@ source "drivers/uwb/Kconfig"
 source "drivers/mmc/Kconfig"
 
 source "drivers/memstick/Kconfig"
-
-source "drivers/leds/Kconfig"
-
-source "drivers/nfc/Kconfig"
 
 source "drivers/switch/Kconfig"
 

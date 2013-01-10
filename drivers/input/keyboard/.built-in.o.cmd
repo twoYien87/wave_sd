@@ -1,0 +1,1 @@
+cmd_drivers/input/keyboard/built-in.o :=  /home/demo/Vidéos/wave_sd/toolchain/bin/arm-linux-gnueabihf-ld -EL    -r -o drivers/input/keyboard/built-in.o drivers/input/keyboard/gpio_keys.o drivers/input/keyboard/samsung-keypad.o 

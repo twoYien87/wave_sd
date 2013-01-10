@@ -1,0 +1,4 @@
+kernel/crypto/aes_generic.ko
+kernel/crypto/ansi_cprng.ko
+kernel/drivers/net/wireless/bcmdhd/bcmdhd.ko
+kernel/drivers/staging/android/logger.ko
