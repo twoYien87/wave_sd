@@ -1,11 +1,7 @@
 import init.wave.usb.rc
-service pvrsrvinit /system/vendor/bin/pvrsrvinit
-    class core
-    user root
-    group root
-    oneshot
+
 on init
-    loglevel 0
+    loglevel 9
     export EXTERNAL_STORAGE /storage/sdcard0
     # FIXME: Market checks this variable for space-checking, but downloads to /datadata
     export DOWNLOAD_CACHE /data/download
@@ -37,7 +33,11 @@ on boot
   setprop ro.bt.bdaddr_path /data/bdaddr
 # phone
     setprop ro.telephony.call_ring.multiple 0
-
+service pvrsrvinit /system/vendor/bin/pvrsrvinit
+    class core
+    user root
+    group root
+    oneshot
 
 on fs
    
