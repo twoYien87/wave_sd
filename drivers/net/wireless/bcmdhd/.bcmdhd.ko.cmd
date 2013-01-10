@@ -1,1 +1,0 @@
-cmd_drivers/net/wireless/bcmdhd/bcmdhd.ko := /home/demo/Vidéos/wave_sd/toolchain/bin/arm-linux-gnueabihf-ld -EL -r  -T /home/demo/Vidéos/wave_sd/scripts/module-common.lds   -o drivers/net/wireless/bcmdhd/bcmdhd.ko drivers/net/wireless/bcmdhd/bcmdhd.o drivers/net/wireless/bcmdhd/bcmdhd.mod.o
